@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace WindowsFormsApp1
 {
@@ -19,6 +14,7 @@ namespace WindowsFormsApp1
             }
             return result;
         }
+
         private static string FromDec(long n, int p)
         {
             var result = "";
@@ -29,11 +25,13 @@ namespace WindowsFormsApp1
             }
             return result;
         }
+
         private static bool Check(this string input, int fromBase)
         {
             var allowedChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".Substring(0, fromBase);
             return Regex.IsMatch(input, string.Format("^[{0}]+$", allowedChars), RegexOptions.Compiled | RegexOptions.IgnoreCase);
         }
+
         public static bool TryToBase(this string input, int fromBase, int toBase, out string result)
         {
             var check = Check(input, fromBase);
