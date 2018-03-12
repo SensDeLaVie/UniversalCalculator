@@ -16,27 +16,36 @@ namespace WindowsFormsApp1
         //Ввод основных переменных
         char sign;
         double a;
-        int fromBase1 = 10;
-        int fromBase2 = 10;
-        int toBase1;
-        int toBase2;
+        int fromBase1;
+        int fromBase2;
+        int from;
+        int to;
         int ansBase;
         double b;
         double result;
         public bool isFocused_textbox1 = false;
         public bool isFocused_CC = false;
         public bool isCalc = true;
-        
+
+        public bool IsCalc
+        {
+            get { return isCalc; }
+        }
+
         //НЕ ТРОГАТЬ!!!
         public Form1()
         {
             InitializeComponent();
-            this.KeyDown += new KeyEventHandler(Form1_KeyDown);
-            this.KeyPreview = true;
-            this.KeyPress += new KeyPressEventHandler(Signs);
-            this.textBox1.LostFocus += new EventHandler(textbox1_unFocused);
-            this.textBox1.GotFocus += new EventHandler(textbox1_Focused);
-
+            //KeyDown += new KeyEventHandler(Form1_KeyDown);
+            KeyPreview = true;
+            KeyPress += new KeyPressEventHandler(Signs);
+            textBox1.LostFocus += new EventHandler(textbox1_unFocused);
+            textBox1.GotFocus += new EventHandler(textbox1_Focused);
+            tb_fromBase1.GotFocus += new EventHandler(fromBase1_Focused);
+            tb_fromBase2.GotFocus += new EventHandler(fromBase2_Focused);
+            tb_ansBase.GotFocus += new EventHandler(ansBase_Focused);
+            fromBase.GotFocus += new EventHandler(fromBase_Focused);
+            toBase.GotFocus += new EventHandler(toBase_Focused);
         }
 
         //При запуске программы происходит след.
@@ -46,6 +55,7 @@ namespace WindowsFormsApp1
             ActiveControl = null;
         }
         #region Focused textboxes
+
         //Если основная строка без фокуса
         private void textbox1_unFocused (object sender, EventArgs e)
         {
@@ -57,79 +67,167 @@ namespace WindowsFormsApp1
         {
             isFocused_textbox1 = true;
         }
-        
+
+        private void fromBase1_Focused (object sender, EventArgs e)
+        {
+            if (tb_fromBase1.Text == "Исходная СС1")
+                tb_fromBase1.Text = "";
+            tb_fromBase1.ForeColor = System.Drawing.Color.Black;
+        }
+
+        private void fromBase2_Focused(object sender, EventArgs e)
+        {
+            if (tb_fromBase2.Text == "Исходная СС2")
+                tb_fromBase2.Text = "";
+            tb_fromBase2.ForeColor = System.Drawing.Color.Black;
+        }
+        private void ansBase_Focused(object sender, EventArgs e)
+        {
+            if (tb_ansBase.Text == "СС ответа")
+                tb_ansBase.Text = "";
+            tb_ansBase.ForeColor = System.Drawing.Color.Black;
+        }
+
+        private void fromBase_Focused(object sender, EventArgs e)
+        {
+            if (fromBase.Text == "Из какой системы счисления перевести")
+            {
+                fromBase.Text = "";
+            }
+            fromBase.ForeColor = System.Drawing.Color.Black;
+        }
+
+        private void toBase_Focused(object sender, EventArgs e)
+        {
+            if (toBase.Text == "В какую систему счисления перевести")
+            {
+                toBase.Text = "";
+            }
+            toBase.ForeColor = System.Drawing.Color.Black;
+        }
+
         #endregion
 
-        // Функции по нажатию на клавишы
+        private void Signs(object sender, KeyPressEventArgs e)
+        {
+            if(isFocused_textbox1 == true)
+            {
+                if (e.KeyChar == '*')
+                {
+                    try
+                    {
+                        sign = '*';
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Invalid Input");
+                    }
+                }
+
+                if (e.KeyChar == '/')
+                {
+                    try
+                    {
+                        sign = '/';
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Invalid Input");
+                    }
+                }
+                if (e.KeyChar == '+')
+                {
+                    try
+                    {
+                        sign = '+';
+                        
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Invalid Input");
+                    }
+                }
+
+                if (e.KeyChar == '-')
+                {
+                    try
+                    {
+                        sign = '-';
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Invalid Input");
+                    }
+                }
+            }
+        }
+
+        /*// Функции по нажатию на клавишы
+
         private void Signs(object sender, KeyPressEventArgs e)
         {
             if(!isFocused_CC && !isFocused_textbox1)
             {
                 if (Char.ToUpper(e.KeyChar) >= 'A' && Char.ToUpper(e.KeyChar) <= 'Z')
                     textBox1.Text += Char.ToUpper(e.KeyChar);
-            }
 
-            if (e.KeyChar == '+')
-            {
-                try
+                if (e.KeyChar == '*')
                 {
-                    sign = '+';
+                    try
+                    {
+                        sign = '*';
 
-                    textBox1.Text += "+";
+                        textBox1.Text += "*";
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Invalid Input");
+                    }
                 }
-                catch
+
+                if (e.KeyChar == '/')
                 {
-                    MessageBox.Show("Invalid Input");
-                }
-            }
+                    try
+                    {
+                        sign = '/';
 
-            if (e.KeyChar == '-')
-            {
-                try
+                        textBox1.Text += "/";
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Invalid Input");
+                    }
+                }
+                if (e.KeyChar == '+')
                 {
-                    sign = '-';
+                    try
+                    {
+                        sign = '+';
 
-                    textBox1.Text += "-";
+                        textBox1.Text += "+";
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Invalid Input");
+                    }
                 }
-                catch
+
+                if (e.KeyChar == '-')
                 {
-                    MessageBox.Show("Invalid Input");
-                }
-            }
+                    try
+                    {
+                        sign = '-';
 
-            if (!isFocused_textbox1 && !isFocused_CC)
-            {
+                        textBox1.Text += "-";
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Invalid Input");
+                    }
+                }
                 if (e.KeyChar < '0' || e.KeyChar > '9')
                 {
                     textBox1.Text += e.KeyChar;
-                }
-            }
-
-            if (e.KeyChar == '*')
-            {
-                try
-                {
-                    sign = '*';
-
-                    textBox1.Text += "*";
-                }
-                catch
-                {
-                    MessageBox.Show("Invalid Input");
-                }
-            }
-
-            if (e.KeyChar == '/')
-            {
-                try
-                {
-                    sign = '/';
-
-                    textBox1.Text += "/";
-                }
-                catch
-                {
-                    MessageBox.Show("Invalid Input");
                 }
             }
         }
@@ -137,51 +235,8 @@ namespace WindowsFormsApp1
         //Равно, цифры
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
-            {
-                try
-                {
-                    b = double.Parse(textBox1.Text);
-                    switch (sign)
-                    {
-                        case '+':
-                            result = a + b;
-                            textBox1.Text = result.ToString();
-                            break;
-                        case '-':
-                            result = a - b;
-                            textBox1.Text = result.ToString();
-                            break;
-                        case '*':
-                            result = a * b;
-                            textBox1.Text = result.ToString();
-                            break;
-                        case '/':
-                            result = a / b;
-                            textBox1.Text = result.ToString();
-                            break;
-                    }
-                    ActiveControl = null;
-                }
-                catch
-                {
-                    MessageBox.Show("Invalid Input");
-                }
-            }
-
             if (!isFocused_textbox1 && !isFocused_CC)
             {
-                if (e.KeyCode == Keys.Back)
-                {
-                    try
-                    {
-                        textBox1.Text = textBox1.Text.Remove(textBox1.Text.Length - 1, 1);
-                    }
-                    catch
-                    {
-
-                    }
-                }
                 if (e.KeyCode == Keys.NumPad0 || e.KeyCode == Keys.D0)
                 {
                     textBox1.Text += '0';
@@ -222,14 +277,9 @@ namespace WindowsFormsApp1
                 {
                     textBox1.Text += '9';
                 }
-
-
-                if (e.KeyCode == Keys.Delete)
-                {
-                    textBox1.Text = "";
-                }
             }
         }
+        */
 
         #region Virtual keyboard
         // Обработка нажатий на экранную клавиатуру
@@ -348,10 +398,14 @@ namespace WindowsFormsApp1
             string[] n = new string[2];
             n = textBox1.Text.Split(sign);
             string temp;
-            BaseConverter.TryToBase(n[0], fromBase1, toBase1, out temp);
+            fromBase1 = int.Parse(tb_fromBase1.Text);
+            fromBase2 = int.Parse(tb_fromBase2.Text);
+            ansBase = int.Parse(tb_ansBase.Text);
+            BaseConverter.TryToBase(n[0], fromBase1, 10, out temp);
             a = double.Parse(temp);
-            BaseConverter.TryToBase(n[1], fromBase2, toBase2, out temp);
+            BaseConverter.TryToBase(n[1], fromBase2, 10, out temp);
             b = double.Parse(temp);
+            
             try
             {
                 switch(sign)
@@ -378,60 +432,27 @@ namespace WindowsFormsApp1
                         break;
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                if (textBox1.Text[textBox1.Text.Length - 1] == '=')
-                {
-                    textBox1.Text = textBox1.Text.Remove(textBox1.Text.Length - 1, 1);
-                    b = double.Parse(textBox1.Text);
-                    switch (sign)
-                    {
-                        case '+':
-                            result = a + b;
-                            textBox1.Text = result.ToString();
-                            break;
-                        case '-':
-                            result = a - b;
-                            textBox1.Text = result.ToString();
-                            break;
-                        case '*':
-                            result = a * b;
-                            textBox1.Text = result.ToString();
-                            break;
-                        case '/':
-                            result = a / b;
-                            textBox1.Text = result.ToString();
-                            break;
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Invalid Input");
-                }
+                MessageBox.Show(ex.ToString());
             }
         }
         
         private void button1_Click(object sender, EventArgs e)
         {
-            //textBox1.Text = "";
-            string temp;
-            try
-            {
-                //fromBase1 = int.Parse(CC.Text);
-            }
-            catch
-            {
-                MessageBox.Show("Please enter valid numeric system");
-            }
-            if (fromBase1 > 36)
-            {
-                MessageBox.Show("Please enter valid numeric system");
-            }
-            else
-            {
-                BaseConverter.TryToBase(textBox1.Text, 10, fromBase1, out temp);
-                textBox1.Text = temp;
-            }
+            sign = ' ';
+            a = 0;
+            fromBase1 = 0;
+            fromBase2 = 0;
+            ansBase = 0;
+            b = 0;
+            result = 0;
+            textBox1.Text = "";
+            tb_fromBase1.Text = "";
+            tb_fromBase2.Text = "";
+            tb_ansBase.Text = "";
+            fromBase.Text = "";
+            toBase.Text = "";
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -469,6 +490,7 @@ namespace WindowsFormsApp1
             tb_fromBase1.Visible = false;
             tb_fromBase2.Visible = false;
             tb_ansBase.Visible = false;
+            Conv_button.Visible = true;
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -480,7 +502,18 @@ namespace WindowsFormsApp1
             tb_fromBase1.Visible = true;
             tb_fromBase2.Visible = true;
             tb_ansBase.Visible = true;
+            Conv_button.Visible = false;
         }
+
+        private void Conv_button_Click(object sender, EventArgs e)
+        {
+            string temp;
+            from = int.Parse(fromBase.Text);
+            to = int.Parse(toBase.Text);
+            BaseConverter.TryToBase(textBox1.Text, from, to, out temp);
+            textBox1.Text = temp;
+        }
+
         #endregion
     }
 }

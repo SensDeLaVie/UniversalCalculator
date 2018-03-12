@@ -58,6 +58,7 @@
             this.tb_fromBase1 = new System.Windows.Forms.TextBox();
             this.toBase = new System.Windows.Forms.TextBox();
             this.fromBase = new System.Windows.Forms.TextBox();
+            this.Conv_button = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -385,11 +386,23 @@
             this.fromBase.Text = "Из какой системы счисления перевести";
             this.fromBase.Visible = false;
             // 
+            // Conv_button
+            // 
+            this.Conv_button.Location = new System.Drawing.Point(164, 285);
+            this.Conv_button.Name = "Conv_button";
+            this.Conv_button.Size = new System.Drawing.Size(44, 25);
+            this.Conv_button.TabIndex = 14;
+            this.Conv_button.Text = "Conversion";
+            this.Conv_button.UseVisualStyleBackColor = true;
+            this.Conv_button.Visible = false;
+            this.Conv_button.Click += new System.EventHandler(this.Conv_button_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(357, 322);
+            this.Controls.Add(this.Conv_button);
             this.Controls.Add(this.fromBase);
             this.Controls.Add(this.toBase);
             this.Controls.Add(this.tb_fromBase1);
@@ -428,7 +441,7 @@
         private System.Windows.Forms.Button eight;
         private System.Windows.Forms.Button four;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
+        public  System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button eq;
         private System.Windows.Forms.Button division;
         private System.Windows.Forms.Button multiplyer;
@@ -445,6 +458,7 @@
         private System.Windows.Forms.TextBox tb_fromBase1;
         private System.Windows.Forms.TextBox toBase;
         private System.Windows.Forms.TextBox fromBase;
+        private System.Windows.Forms.Button Conv_button;
     }
 }
 
