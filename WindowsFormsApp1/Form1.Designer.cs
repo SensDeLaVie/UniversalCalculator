@@ -59,6 +59,7 @@
             this.toBase = new System.Windows.Forms.TextBox();
             this.fromBase = new System.Windows.Forms.TextBox();
             this.Conv_button = new System.Windows.Forms.Button();
+            this.acc = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -397,11 +398,21 @@
             this.Conv_button.Visible = false;
             this.Conv_button.Click += new System.EventHandler(this.Conv_button_Click);
             // 
+            // acc
+            // 
+            this.acc.ForeColor = System.Drawing.SystemColors.InactiveCaption;
+            this.acc.Location = new System.Drawing.Point(302, 64);
+            this.acc.Name = "acc";
+            this.acc.Size = new System.Drawing.Size(43, 20);
+            this.acc.TabIndex = 16;
+            this.acc.Text = "acc";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(357, 322);
+            this.Controls.Add(this.acc);
             this.Controls.Add(this.Conv_button);
             this.Controls.Add(this.fromBase);
             this.Controls.Add(this.toBase);
@@ -459,6 +470,7 @@
         private System.Windows.Forms.TextBox toBase;
         private System.Windows.Forms.TextBox fromBase;
         private System.Windows.Forms.Button Conv_button;
+        private System.Windows.Forms.TextBox acc;
     }
 }
 

@@ -42,5 +42,4 @@ namespace WindowsFormsApp1
             return check;
         }
     }
-
 }

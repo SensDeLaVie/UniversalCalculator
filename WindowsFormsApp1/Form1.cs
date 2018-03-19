@@ -32,7 +32,7 @@ namespace WindowsFormsApp1
             get { return isCalc; }
         }
 
-        //НЕ ТРОГАТЬ!!!
+        /////////////////////НЕ ТРОГАТЬ!!!///////////////////////////////////////
         public Form1()
         {
             InitializeComponent();
@@ -46,7 +46,9 @@ namespace WindowsFormsApp1
             tb_ansBase.GotFocus += new EventHandler(ansBase_Focused);
             fromBase.GotFocus += new EventHandler(fromBase_Focused);
             toBase.GotFocus += new EventHandler(toBase_Focused);
+            acc.GotFocus += new EventHandler(acc_Focused);
         }
+        //////////////////////////////////////////////////////////////////////////
 
         //При запуске программы происходит след.
         protected override void OnShown(EventArgs e)
@@ -104,6 +106,15 @@ namespace WindowsFormsApp1
                 toBase.Text = "";
             }
             toBase.ForeColor = System.Drawing.Color.Black;
+        }
+
+        private void acc_Focused(object sender, EventArgs e)
+        {
+            if (acc.Text == "acc")
+            {
+                acc.Text = "";
+            }
+            acc.ForeColor = System.Drawing.Color.Black;
         }
 
         #endregion
@@ -395,16 +406,28 @@ namespace WindowsFormsApp1
 
         private void eq_Click(object sender, EventArgs e)
         {
+            string[] t = new string[2];
+
             string[] n = new string[2];
             n = textBox1.Text.Split(sign);
-            string temp;
+            string temp1;
+            string temp2;
             fromBase1 = int.Parse(tb_fromBase1.Text);
             fromBase2 = int.Parse(tb_fromBase2.Text);
             ansBase = int.Parse(tb_ansBase.Text);
-            BaseConverter.TryToBase(n[0], fromBase1, 10, out temp);
-            a = double.Parse(temp);
-            BaseConverter.TryToBase(n[1], fromBase2, 10, out temp);
-            b = double.Parse(temp);
+
+            string f_foreDot = n[0].Substring(0, n[0].IndexOf(',') - 1);
+            string f_aftDot = n[0].Substring(n[0].IndexOf(',') + 1);
+            string s_foreDot = n[1].Substring(0, n[0].IndexOf(',') - 1);
+            string s_aftDot = n[1].Substring(n[0].IndexOf(',') + 1);
+
+            BaseConverter.TryToBase(f_foreDot, fromBase1, 10, out temp1);
+            RealConverter.TryToBase(f_aftDot, fromBase1, 10, out temp2, int.Parse(acc.Text));
+            MessageBox.Show(temp1 + ',' + temp2);
+            a = double.Parse(temp1 + ',' + temp2);
+            BaseConverter.TryToBase(s_foreDot, fromBase1, 10, out temp1);
+            RealConverter.TryToBase(s_aftDot, fromBase1, 10, out temp2, int.Parse(acc.Text));
+            b = double.Parse(temp1 + ',' + temp2);
             
             try
             {
@@ -412,23 +435,31 @@ namespace WindowsFormsApp1
                 {
                     case '+':
                         result = a + b;
-                        BaseConverter.TryToBase(result.ToString(), 10, ansBase, out temp);
-                        textBox1.Text = temp;
+                        t = result.ToString().Split(',');
+                        BaseConverter.TryToBase(t[0], 10, ansBase, out temp1);
+                        RealConverter.TryToBase(t[1], 10, ansBase, out temp2, int.Parse(acc.Text));
+                        textBox1.Text = temp1 + ',' + temp2;
                         break;
                     case '-':
                         result = a - b;
-                        BaseConverter.TryToBase(result.ToString(), 10, ansBase, out temp);
-                        textBox1.Text = temp;
+                        t = result.ToString().Split(',');
+                        BaseConverter.TryToBase(t[0], 10, ansBase, out temp1);
+                        RealConverter.TryToBase(t[1], 10, ansBase, out temp2, int.Parse(acc.Text));
+                        textBox1.Text = temp1 + ',' + temp2;
                         break;
                     case '*':
                         result = a * b;
-                        BaseConverter.TryToBase(result.ToString(), 10, ansBase, out temp);
-                        textBox1.Text = temp;
+                        t = result.ToString().Split(',');
+                        BaseConverter.TryToBase(t[0], 10, ansBase, out temp1);
+                        RealConverter.TryToBase(t[1], 10, ansBase, out temp2, int.Parse(acc.Text));
+                        textBox1.Text = temp1 + ',' + temp2;
                         break;
                     case '/':
                         result = a / b;
-                        BaseConverter.TryToBase(result.ToString(), 10, ansBase, out temp);
-                        textBox1.Text = temp;
+                        t = result.ToString().Split(',');
+                        BaseConverter.TryToBase(t[0], 10, ansBase, out temp1);
+                        RealConverter.TryToBase(t[1], 10, ansBase, out temp2, int.Parse(acc.Text));
+                        textBox1.Text = temp1 + ',' + temp2;
                         break;
                 }
             }
@@ -507,17 +538,21 @@ namespace WindowsFormsApp1
 
         private void Conv_button_Click(object sender, EventArgs e)
         {
-            string temp;
+            string temp1;
+            string temp2 = "";
             from = int.Parse(fromBase.Text);
             to = int.Parse(toBase.Text);
-            BaseConverter.TryToBase(textBox1.Text, from, to, out temp);
-            textBox1.Text = temp;
+            string[] input = new string[2];
+            input = textBox1.Text.Split(',');
+            string intPart = input[0];
+            string realPart = input[1];
+            BaseConverter.TryToBase(intPart, from, to, out temp1);
+            RealConverter.TryToBase(realPart, from, to, out temp2, int.Parse(acc.Text));
+            textBox1.Text = temp1 + "," + temp2;
         }
-
         #endregion
     }
 }
-
 /*
             try
             {
