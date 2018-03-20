@@ -407,7 +407,7 @@ namespace WindowsFormsApp1
         private void eq_Click(object sender, EventArgs e)
         {
             string[] t = new string[2];
-
+            t[0] = "0";
             string[] n = new string[2];
             n = textBox1.Text.Split(sign);
             string temp1;
@@ -415,6 +415,16 @@ namespace WindowsFormsApp1
             fromBase1 = int.Parse(tb_fromBase1.Text);
             fromBase2 = int.Parse(tb_fromBase2.Text);
             ansBase = int.Parse(tb_ansBase.Text);
+            if(!n[0].Contains(","))
+            {
+                n[0] += ",0";
+            }
+            if (!n[1].Contains(","))
+            {
+                n[1] += ",0";
+            }
+
+            
 
             string f_foreDot = n[0].Substring(0, n[0].IndexOf(',') - 1);
             string f_aftDot = n[0].Substring(n[0].IndexOf(',') + 1);
@@ -423,7 +433,6 @@ namespace WindowsFormsApp1
 
             BaseConverter.TryToBase(f_foreDot, fromBase1, 10, out temp1);
             RealConverter.TryToBase(f_aftDot, fromBase1, 10, out temp2, int.Parse(acc.Text));
-            MessageBox.Show(temp1 + ',' + temp2);
             a = double.Parse(temp1 + ',' + temp2);
             BaseConverter.TryToBase(s_foreDot, fromBase1, 10, out temp1);
             RealConverter.TryToBase(s_aftDot, fromBase1, 10, out temp2, int.Parse(acc.Text));
@@ -436,30 +445,42 @@ namespace WindowsFormsApp1
                     case '+':
                         result = a + b;
                         t = result.ToString().Split(',');
+                        if (result.ToString().Contains(","))
+                        {
+                            RealConverter.TryToBase(t[1], 10, ansBase, out temp2, int.Parse(acc.Text));
+                        }
                         BaseConverter.TryToBase(t[0], 10, ansBase, out temp1);
-                        RealConverter.TryToBase(t[1], 10, ansBase, out temp2, int.Parse(acc.Text));
-                        textBox1.Text = temp1 + ',' + temp2;
+                        textBox1.Text = result.ToString().Contains(",") ? temp1 + ',' + temp2 : temp1;
                         break;
                     case '-':
                         result = a - b;
                         t = result.ToString().Split(',');
+                        if (result.ToString().Contains(","))
+                        {
+                            RealConverter.TryToBase(t[1], 10, ansBase, out temp2, int.Parse(acc.Text));
+                        }
                         BaseConverter.TryToBase(t[0], 10, ansBase, out temp1);
-                        RealConverter.TryToBase(t[1], 10, ansBase, out temp2, int.Parse(acc.Text));
-                        textBox1.Text = temp1 + ',' + temp2;
+                        textBox1.Text = result.ToString().Contains(",") ? temp1 + ',' + temp2 : temp1;
                         break;
                     case '*':
                         result = a * b;
                         t = result.ToString().Split(',');
+                        if (result.ToString().Contains(","))
+                        {
+                            RealConverter.TryToBase(t[1], 10, ansBase, out temp2, int.Parse(acc.Text));
+                        }
                         BaseConverter.TryToBase(t[0], 10, ansBase, out temp1);
-                        RealConverter.TryToBase(t[1], 10, ansBase, out temp2, int.Parse(acc.Text));
-                        textBox1.Text = temp1 + ',' + temp2;
+                        textBox1.Text = result.ToString().Contains(",") ? temp1 + ',' + temp2 : temp1;
                         break;
                     case '/':
                         result = a / b;
                         t = result.ToString().Split(',');
+                        if (result.ToString().Contains(","))
+                        {
+                            RealConverter.TryToBase(t[1], 10, ansBase, out temp2, int.Parse(acc.Text));
+                        }
                         BaseConverter.TryToBase(t[0], 10, ansBase, out temp1);
-                        RealConverter.TryToBase(t[1], 10, ansBase, out temp2, int.Parse(acc.Text));
-                        textBox1.Text = temp1 + ',' + temp2;
+                        textBox1.Text = result.ToString().Contains(",") ? temp1 + ',' + temp2 : temp1;
                         break;
                 }
             }
